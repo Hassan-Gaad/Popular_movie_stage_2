@@ -1,5 +1,5 @@
-# Popular Movies 1
-Popular Movies (Stage 1) App is the first project for Udacity's Android Developer Nanodegree program.
+# Popular Movies 2
+Popular Movies (Stage 2) App is the first project for Udacity's Android Developer Nanodegree program.
 
 # Used libraries
 Picasso
