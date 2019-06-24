@@ -58,6 +58,9 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
     boolean favorite;
     private static final String TAG = "detailActivity";
     MovieDatabase mDb;
+
+    DetailActivityViewModelfactory modelfactory;
+    DetailActivityViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +120,11 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
                 .into(moviePoster);
 
         mDb=MovieDatabase.getInstance(getApplicationContext());
+
+        modelfactory=new DetailActivityViewModelfactory(mDb,movieID);
+        viewModel=ViewModelProviders.of(this,modelfactory).get(DetailActivityViewModel.class);
+
+
         checkIfMovieIsFavorite();
         new TrailerQueryTask().execute(VIDEOS);
         new ReviewsAsyncTask().execute(REVIEWS);
@@ -124,12 +132,9 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
 
 
     }
-    Movie queeredMove;
     public void checkIfMovieIsFavorite(){
 
-        DetailActivityViewModelfactory modelfactory=new DetailActivityViewModelfactory(mDb,movieID);
-        final DetailActivityViewModel viewModel=ViewModelProviders.of(this,modelfactory).get(DetailActivityViewModel.class);
-        viewModel.getmMovie().observe(this, new Observer<Movie>() {
+                 viewModel.getmMovie().observe(this, new Observer<Movie>() {
             @Override
             public void onChanged(@Nullable Movie movie) {
                 viewModel.getmMovie().removeObserver(this);
